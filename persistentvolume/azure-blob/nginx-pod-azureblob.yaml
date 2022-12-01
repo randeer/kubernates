@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx-pv-blob-azure-pod
+spec:
+  volumes:
+    - name: nginx-pv-blob-azure
+      persistentVolumeClaim:
+        claimName: pvc-blob
+  containers:
+    - name: nginx-azure
+      image: nginx
+      ports:
+        - containerPort: 80
+          name: "nginx-blob"
+      volumeMounts:
+        - mountPath: "/usr/share/nginx/html"
+          name: nginx-pv-blob-azure
