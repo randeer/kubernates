@@ -17,13 +17,3 @@ spec:
         - mountPath: "/usr/share/nginx/html"
           name: nginx-pv-storage-azure
 
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: azure-nginx
-
-spec:
-  ports:
-    - port: 80
-  type: LoadBalancer
