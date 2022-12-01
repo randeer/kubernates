@@ -1,0 +1,29 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx-pv-azure-pod
+spec:
+  volumes:
+    - name: nginx-pv-storage-azure
+      persistentVolumeClaim:
+        claimName: azurefile-pvc
+  containers:
+    - name: nginx
+      image: nginx
+      ports:
+        - containerPort: 80
+          name: "nginx-server"
+      volumeMounts:
+        - mountPath: "/usr/share/nginx/html"
+          name: nginx-pv-storage-azure
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: azure-nginx
+
+spec:
+  ports:
+    - port: 80
+  type: LoadBalancer
