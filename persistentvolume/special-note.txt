@@ -1,0 +1,32 @@
+NFS 
+
+Before using, it would be better to install required NFS plugins on all the nodes.
+
+# apt -y install nfs-common
+
+Before we can mount, let’s discover NFS exports on NFSv3 or NFSv4 server.
+# showmount --exports
+
+-------------------------------
+Using Azure Storage
+
+Install Azure Blob Storage CSI driver
+
+helm repo add blob-csi-driver https://raw.githubusercontent.com/kubernetes-sigs/blob-csi-driver/master/charts
+helm install blob-csi-driver blob-csi-driver/blob-csi-driver --set node.enableBlobfuseProxy=true --namespace kube-system --version v1.18.0
+
+Follow this guidence (https://github.com/kubernetes-sigs/blob-csi-driver/blob/master/docs/install-csi-driver-v1.18.0.md)
+
+
+Install Azure File CSI driver
+
+helm repo add azurefile-csi-driver https://raw.githubusercontent.com/kubernetes-sigs/azurefile-csi-driver/master/charts
+helm install azurefile-csi-driver azurefile-csi-driver/azurefile-csi-driver --namespace kube-system --version v1.24.0
+
+Follow this guidence (https://github.com/kubernetes-sigs/azurefile-csi-driver/blob/master/docs/install-csi-driver-master.md)
+
+--------------------------------------
+
+After thet check and verify CSI drivers that installed on your cluster
+
+kubectl get csidrivers
