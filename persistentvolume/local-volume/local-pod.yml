@@ -1,0 +1,29 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx-local-pod
+  labels:
+    name: local-pod
+spec:
+  volumes:
+    - name: local-storage
+      persistentVolumeClaim:
+        claimName: local-disk-pvc
+  containers:
+    - name: nginx-local
+      image: nginx
+      ports:
+        - containerPort: 80
+          name: "nginx-server"
+      volumeMounts:
+        - mountPath: "/usr/share/nginx/html"
+          name: local-storage
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+              - key: local-disk
+                operator: In
+                values:
+                  - attached
