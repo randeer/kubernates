@@ -1,0 +1,13 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: wanamalii-role
+  namespace: rashmika
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: pod-role
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: User
+  name: wanamalii
