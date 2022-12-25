@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  creationTimestamp: null
+  name: my-config
+  namespace: wordpress
+data:
+  mygirl: rashmika_manawadu

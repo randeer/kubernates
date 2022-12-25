@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: my-txt
+  namespace: wordpress
+data:
+  config-data.txt: |
+    Rashmika Manawadu
+    you are mine,
+    And I will take
+    whatever mines.
+    You are my life
+  file2.txt: |
+    sudo -i -u postgres
+    createuser --interactive
+    PostgreSQL for high availability and replication
+
