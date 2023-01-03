@@ -1,0 +1,19 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: test-network-policy
+  namespace: netpol-2
+spec:
+  podSelector:
+    matchLabels:
+      run: nginx
+  policyTypes:
+    - Ingress
+  ingress:
+    - from:
+        - namespaceSelector:
+            matchLabels:
+              my-life: rashmika
+          podSelector:
+            matchLabels:
+              run: ubuntu-1
