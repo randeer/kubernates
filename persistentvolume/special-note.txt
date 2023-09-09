@@ -7,6 +7,8 @@ Before using, it would be better to install required NFS plugins on all the node
 Before we can mount, let’s discover NFS exports on NFSv3 or NFSv4 server.
 # showmount --exports
 
+Kubernetes doesn't include an internal NFS provisioner. You need to use an external provisioner to create a StorageClass for NFS.
+https://github.com/kubernetes-sigs/nfs-subdir-external-provisioner
 -------------------------------
 Using Azure Storage
 
