@@ -1,0 +1,68 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f docker-compose.yaml
+    kompose.version: 1.30.0 (9d8dcb518)
+    traefik.enable: "true"
+    traefik.http.routers.teleport-http.entrypoints: web
+    traefik.http.routers.teleport-http.rule: HostRegexp(`your-server-url`, `{subhost:[a-z]+}.your-server-url`)
+    traefik.http.routers.teleport-https.entrypoints: websecure
+    traefik.http.routers.teleport-https.rule: HostRegexp(`your-server-url`, `{subhost:[a-z]+}.your-server-url`)
+    traefik.http.routers.teleport-https.tls: "true"
+    traefik.http.routers.teleport-https.tls.certresolver: your-certresolver
+    traefik.http.routers.teleport-https.tls.domains[0].main: your-server-url
+    traefik.http.routers.teleport-https.tls.domains[0].sans: '*.your-server-url'
+    traefik.http.services.teleport.loadbalancer.server.port: "3080"
+    traefik.http.services.teleport.loadbalancer.server.scheme: https
+  creationTimestamp: null
+  labels:
+    io.kompose.service: teleport
+  name: teleport
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: teleport
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert -f docker-compose.yaml
+        kompose.version: 1.30.0 (9d8dcb518)
+        traefik.enable: "true"
+        traefik.http.routers.teleport-http.entrypoints: web
+        traefik.http.routers.teleport-http.rule: HostRegexp(`your-server-url`, `{subhost:[a-z]+}.your-server-url`)
+        traefik.http.routers.teleport-https.entrypoints: websecure
+        traefik.http.routers.teleport-https.rule: HostRegexp(`your-server-url`, `{subhost:[a-z]+}.your-server-url`)
+        traefik.http.routers.teleport-https.tls: "true"
+        traefik.http.routers.teleport-https.tls.certresolver: your-certresolver
+        traefik.http.routers.teleport-https.tls.domains[0].main: your-server-url
+        traefik.http.routers.teleport-https.tls.domains[0].sans: '*.your-server-url'
+        traefik.http.services.teleport.loadbalancer.server.port: "3080"
+        traefik.http.services.teleport.loadbalancer.server.scheme: https
+      creationTimestamp: null
+      labels:
+        io.kompose.network/your-traefik-network: "true"
+        io.kompose.service: teleport
+    spec:
+      containers:
+        - image: public.ecr.aws/gravitational/teleport-distroless:13
+          name: teleport
+          resources: {}
+          volumeMounts:
+            - mountPath: /etc/teleport
+              name: teleport-claim0
+            - mountPath: /var/lib/teleport
+              name: teleport-claim1
+      restartPolicy: Always
+      volumes:
+        - name: teleport-claim0
+          persistentVolumeClaim:
+            claimName: teleport-claim0
+        - name: teleport-claim1
+          persistentVolumeClaim:
+            claimName: teleport-claim1
+status: {}
