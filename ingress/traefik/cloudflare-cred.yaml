@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: cloudflare-credentials
+  namespace: traefik
+type: Opeque
+stringData:
+  email: randeerlalanga92@gmail.com
+  apiKey: 2c96dbea6c6ce2b6fc88e61b2d53c255c3c2a
