@@ -1,0 +1,31 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: my-app-ingress
+  namespace: nginx-traefik
+spec:
+  entryPoints:
+    - web
+  routes:
+    - match: Host(`traefik.lala-1992.xyz`) && PathPrefix(`/`)
+      kind: Rule
+      services:
+        - name: nginx
+          port: 80
+      middlewares:
+        - name: azure-ad-auth-middleware
+  tls:
+    certResolver: cloudflare
+
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: azure-ad-auth-middleware
+  namespace: nginx-traefik
+spec:
+  forwardAuth:
+    address: "https://login.microsoftonline.com/0aeeed0d-e697-49f8-921a-82ef5559540b/oauth2/v2.0/authorize?client_id=a75fe840-f4d6-4206-90a8-07ecbdbb0fef&scope=openid&response_type=id_token&redirect_uri=https://traefik.lala-1992.xyz/auth&response_mode=form_post"
+    authResponseHeaders:
+      - "X-Auth-Request-User"
+    secret: azure-ad-secret
