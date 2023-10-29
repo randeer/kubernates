@@ -1,0 +1,45 @@
+apiVersion: v1
+items:
+- apiVersion: networking.k8s.io/v1
+  kind: Ingress
+  metadata:
+    annotations:
+      meta.helm.sh/release-name: portainer
+      meta.helm.sh/release-namespace: portainer
+      nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+    creationTimestamp: "2023-10-28T09:53:57Z"
+    generation: 2
+    labels:
+      app.kubernetes.io/instance: portainer
+      app.kubernetes.io/managed-by: Helm
+      app.kubernetes.io/name: portainer
+      app.kubernetes.io/version: ce-latest-ee-2.19.1
+      helm.sh/chart: portainer-1.0.46
+    name: portainer
+    namespace: portainer
+    resourceVersion: "857408"
+    uid: 21883b88-d447-4b4e-8708-fe9bc73a71f2
+  spec:
+    ingressClassName: nginx
+    rules:
+    - host: admin.lala-1992.xyz
+      http:
+        paths:
+        - backend:
+            service:
+              name: portainer
+              port:
+                number: 9443
+          path: /
+          pathType: Prefix
+    tls:
+    - hosts:
+      - admin.k8s.lala-1992.xyz
+      secretName: portainer-cert
+  status:
+    loadBalancer:
+      ingress:
+      - ip: 10.0.0.4
+kind: List
+metadata:
+  resourceVersion: ""
