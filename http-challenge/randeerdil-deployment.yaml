@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: randeerdil-deployment
+  namespace: terraform
+  labels:
+    app: randeerdil
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: randeerdil
+  template:
+    metadata:
+      labels:
+        app: randeerdil
+    spec:
+      containers:
+      - name: randeerdil
+        image: randeerdil/circleci-asp-dot-net-core-cv:20231029114636
+        ports:
+        - containerPort: 80

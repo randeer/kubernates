@@ -1,0 +1,11 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: triumpheduconsultantse-com-tls
+  namespace: terraform
+spec:
+  secretName: triumpheduconsultants-com-tls
+  issuerRef:
+    name: letsencrypt-triumpheduconsultants
+  dnsNames:
+  - k8s.triumpheduconsultants.com
