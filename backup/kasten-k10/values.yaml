@@ -1,0 +1,13 @@
+ingress:
+  create: true
+  class: nginx
+  host: kasten.lala-1992.xyz
+  tls:
+    enabled: true
+    secretName: kasten-io-k8s
+  annotations:
+    "nginx.ingress.kubernetes.io/ssl-redirect": "true"
+  pathType: Prefix
+auth:
+  tokenAuth:
+    enabled: true
