@@ -1,0 +1,12 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: webapprouting-tls
+  namespace: aks-ingress
+spec:
+  secretName: webapprouting-com-tls
+  issuerRef:
+    name: letsencrypt-cluster-issuer
+    kind: ClusterIssuer
+  dnsNames:
+  - aks.lala-1992.xyz
